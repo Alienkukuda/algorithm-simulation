@@ -1,0 +1,39 @@
+﻿快速排序(Quick Sort，P23)是对冒泡排序的改进 ，其分治思想如下： 对于输入的子数组a[p:r]： 1) 分解(Divide): 以a[p]的值为基准元素(pivot)将a[p:r]划分成3段：a[p:q-1], a[q], a[q+1,r]，使得任何一个元素小于等于a[q]，而a[q+1,r]中的任何一个元素大于等于a[q]。下标q在划分过程中确定。 
+2) 递归求解(Conquer): 通过递归调用快速排序算法分别对a[p:q-1]和a[q+1:r]进行排序。
+3) 合并(Merge): 由于对a[p:q-1]和a[q+1:r]都已排好序，直接合并即可。
+
+快速排序算法的复杂性分析
+1) 对于输入序列a[p:r]，每次Partition分区的计算时间显然为O(r-p-1)。
+2) 当每次划分产生的两个区域均分别包含n-1个元素和1个元素时，算法复
+杂性达到最坏情况，如下：
+3) 当每次划分产生的两个区域均包含n/2个元素时，算法复杂性达到最好
+情况，如下：
+4) 快速排序在平均情况下的算法复杂性也是T(n)=O(nlogn)，故名为快速排
+序。
+
+
+template<class Type>
+//快速排序源代码(QuickSort函数)
+void QuickSort(Type a[], int p, int r)
+{
+      if (p<r) {
+        int q=Partition(a,p,r); //以a[p]分基准为左右两半
+        QuickSort (a,p,q-1); //对左半段排序
+        QuickSort (a,q+1,r); //对右半段排序
+        }
+}
+
+template<class Type>
+//快速排序源代码(Partition函数)
+int Partition(Type a[], int p, int r){
+        int i = p, j = r+1; 
+        Type x=a[p];
+        //将<x的交换到左边区域，>x的交换到 右边区域
+        while (true) {
+           while (a[++i]<x && i<r); 
+           while (a[--j]>x);
+           if (i >= j) break; 
+		   std::swap(a[i], a[j]);
+        }
+       a[p] = a[j];  a[j] = x;  return j;
+}

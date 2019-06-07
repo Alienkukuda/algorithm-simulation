@@ -1,0 +1,72 @@
+﻿ 单源最短路径问题：
+
+    给定带权有向图G =(V, E)，其中每条边的权(Weight)是非负实数。另外，还给定V中的一个顶点，称为源(Source)。现在要计算从源s到各顶点的最短路径长度。路径长度是指路上各边权之和。
+
+ 采用分支限界法(优先队列式)的基本思想：用一极小堆来存储活结点表。其优先级是结点所对应的当前路长。
+ 采取如下剪枝策略：一旦发现一个结点的下界不小于当前找到的最短路长，则算法剪去以该结点为根的子树。
+
+ 优先队列式实现-定义部分
+
+//主类定义
+template <class Type>
+class Graph
+{
+friend void main(void);
+public:
+    int n; //顶点数
+        *prev; //前驱顶点数组
+    Type **c; //图G的邻接矩阵
+         *dist; //最短距离数组
+};
+
+//最小堆结点定义
+template <class Type>
+class MinHeapNode{
+friend Graph<Type>;
+public:
+    operator int() const{return length;}
+private:
+    int i; //顶点编号
+    Type length; //当前路长
+};
+
+//队列优先式实现-核心函数
+//核心函数 
+template <class Type> 
+void Graph<Type>::ShortestPaths(int v) 
+{ 
+    MinHeap<MinHeadNode<Type>> H(1000); //定义初始扩展结点 
+    MinHeapNode<Type> E; 
+    E.i=v;     E.length=0; 
+    dist[v]=0;
+    while (true) 
+    { 
+	for (int j =1; j <= n; j++) 
+	if ((c[E.i][j]<inf)&&(E.length+c[E.i][j]<dist[j])) 
+	{ 
+	    //顶点i到顶点j可达，且满足控制约束 
+	    dist[j]=E.length+c[E.i][j]; 
+	    prev[j]=E.i; // 加入活结点优先队列 
+	    MinHeapNode<Type> N; 
+	    N.i=j; 
+	    N.length=dist[j]; 
+	    H.Insert(N); 
+	} 
+	try 
+	{
+	    H.DeleteMin(E);
+	} 
+	//取下一扩展结点 
+	catch (OutOfBounds) 
+	{
+	    break;
+	} 
+	// 优先队列空 
+    } 
+}
+
+说明：
+1) 首先创建一个最小堆，用于表示活结点优先队列，其中length表示优先队列的优先级；
+2) 然后选择v作为初始结点；
+3) 依次检查与当前扩展结点i相邻的所有顶点。如果当前扩展结点i和顶点j可达，且从源出发，途经顶点i再到到顶点j所对应的路径长度小于当前最优路径长度，则将该顶点作为活结点插入到活结点优先队列中。
+4) 完成当前结点的扩展后，从活结点优先队列取下一个活结点作为扩展结点继续直至队列空。

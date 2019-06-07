@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.demo">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".AlgGreedy.evo.GreedySSSPPActivity"></activity>
+        <activity android:name=".AlgGreedy.evo.GreedyHuffmanCodeActivity" />
+        <activity android:name=".AlgDynamic.evo.DynamicMatrixChainMulActivity" />
+        <activity android:name=".AlgDynamic.evo.DynamicCpotActivity" />
+        <activity android:name=".AlgDynamic.evo.Dynamic0And1KProbActivity" />
+        <activity android:name=".AlgBranchAndBound.evo.BranchAndBoundSSSPPActivity" />
+        <activity android:name=".AlgBranchAndBound.evo.BranchAndBoundLoadingProbActivity" />
+        <activity android:name=".AlgBranchAndBound.evo.BranchAndBound0And1KProbActivity" />
+        <activity android:name=".AlgBackTrack.evo.BackTrackNQueenProbActivity" />
+        <activity android:name=".AlgBackTrack.evo.BackTrackLoadingProbActivity" />
+        <activity android:name=".AlgBackTrack.evo.BackTrack0And1KProbActivity" />
+        <activity android:name=".AlgRecurAndDivCon.evo.RecurAndDivConQuickSortActivity" />
+        <activity android:name=".AlgRecurAndDivCon.evo.RecurAndDivConMergeSortActivity" />
+        <activity android:name=".AlgRecurAndDivCon.evo.RecurAndDivConBinSearchActivity" />
+        <activity android:name=".AlgRecurAndDivCon.evo.RecurAndDivConTowerOfHanoiActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AlgRecurAndDivCon.Intro.IntroRecurAndDivCon" />
+        <activity android:name=".ShowNavigation.ShowRecurAndDivCon" />
+        <activity android:name=".AlgBranchAndBound.Intro.IntroBranchBound" />
+        <activity android:name=".ShowNavigation.ShowBranchAndBound" />
+        <activity android:name=".AlgBackTrack.Intro.IntroBackTrack" />
+        <activity android:name=".ShowNavigation.ShowBackTrack" />
+        <activity android:name=".AlgGreedy.Intro.IntroGreedy" />
+        <activity android:name=".ShowNavigation.ShowGreedy" />
+        <activity android:name=".AlgDynamic.Intro.IntroDynamic" />
+        <activity android:name=".ShowNavigation.ShowDynamic" />
+        <activity android:name=".AboutSystemActivity"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,46 @@
+﻿0-1背包问题(0-1 Knapsack Problem)：给定n种物品和一背包。物品i的重量是wi，价值为vi，背包的容量为c。如何选择装入背包的物品，使得装入背包中物品的总价值最大?
+
+//0-1背包问题的回溯实现-核心函数BackTrack
+void Knap::BackTrack(int i) 
+{ 
+    if(i>n) 
+    { 
+	if(bestp<cp) 
+	    bestp=cp; 
+	return; 
+    } 
+    if(cw+w[i]<=c)//记录进入左子树 
+    {
+	x[i]=1; 
+	cw+=w[i]; 
+	cp+=p[i]; 
+	BackTrack(i+1); 
+	cw-=w[i]; 
+	cp-=p[i]; 
+    } 
+    if(Bound(i+1)>bestp)//记录进入右子树 
+    {
+	x[i]=0; 
+	BackTrack(i+1); 
+    } 
+}
+
+算法复杂度为：O(n2^n)
+
+0-1背包问题的上界函数：首先对物品按单位价值从大到小进行排序，然后按顺序装入物品(P158)，具体实现如下：
+
+template<class Typew, class Typep>
+Typep Knap<Typew, Typep>::Bound(int i){// 计算上界
+    Typew cleft = c - cw; // 剩余容量
+    Typep b = cp;
+    while (i <= n && w[i] <= cleft) {// 以物品单位重量价值递减序装入物品
+	cleft -= w[i];
+	b += p[i];
+	i++;
+    }
+    //装满背包
+    if (i <= n) 
+	b += p[i] / w[i]  * cleft;
+    return b;
+}
+

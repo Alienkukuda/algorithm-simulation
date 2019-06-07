@@ -1,0 +1,220 @@
+﻿ 装载问题：有一批共n个集装箱要装上2艘载重量分别为c1
+和c2的轮船，其中集装箱i的重量为wi，且：
+1 2
+1
+w c c
+n
+i
+i   
+ 求解目标：确定是否有一个合理的装载方案可将这个集装箱
+装上这2艘轮船。如果有，找出一种装载方案。示例：
+n=3, c1=c2=50, w={10,40,40} 问题有解
+n=3, c1=c2=50, w={20,40,40} 问题无解
+
+ 装载问题：
+如果一个给定装载问题有解，则采用下面的策略可得到
+最优装载方案(可证明)：
+(1) 首先将第一艘轮船尽可能装满；
+(2) 将剩余的集装箱装上第二艘轮船。
+将第一艘轮船尽可能装满等价于选取全体集装箱的一个
+子集，使该子集中集装箱重量之和最接近。
+
+//装载问题的回溯法实现-主类Loading
+template<class T>
+class Loading 
+{
+    friend MaxLoading(T[], T, int);
+private:
+    void BackTrack(int i); //表示搜索第i层子树
+    int n; // 货箱数目
+    T *w, // 货箱重量数组
+       c, // 第一艘船的容量
+       cw, // 当前装载的重量
+       bestw; // 目前最优装载的重量
+};
+
+//装载问题的回溯法实现-核心函数BackTrack
+template<class T>
+void Loading<T>::BackTrack(int i)//从第i 层节点搜索
+{
+    if (i > n) //位于叶节点
+    {
+        if (cw > bestw) 
+	bestw = cw; 
+	return; 
+    }
+    //检查子树
+    if (cw + w[i] <= c) // 尝试x[i] = 1
+    {
+	cw += w[i];
+	BackTrack(i+1) ;
+	cw -= w[i];
+    }
+    BackTrack(i+1);// 尝试x[i] = 0
+}
+
+//算法的复杂性为：O(2n)
+
+//装载问题的回溯法实现-初始函数MaxLoading
+template<class T>
+T MaxLoading(T w[], T c, int n)// 返回最优装载的重量
+{
+    Loading<T> X;
+    //初始化X
+    X.w = w;
+    X.c = c;
+    X.n = n;
+    X.bestw = 0;
+    X.cw = 0;
+    // 计算最优装载的重量
+    X.BackTrack(1); //从第1层开始搜索
+    return X.bestw;
+}
+
+ 定义上界函数进行优化：
+1) 引入成员r，r是剩余集装箱的重量：
+1
+n
+j
+j i
+r w
+ 
+ 
+2) 定义上界函数bound=cw+r，其中cw是当前装载重量；
+3) 假设Z是解空间树第i层上的当前扩展结点，则以Z为根结点的子树
+中任一叶节点所相应的载重量均不超过cw+r。
+故：当cw+r<=bestw时(其中bestw是当前最优载重量)，可将Z的右子
+树剪去。
+
+//优化的核心函数BackTrack
+template<class T>
+void Loading<T>::BackTrack(int i)//从第i 层节点搜索
+{
+    if (i > n) //位于叶节点
+    {
+	if (cw > bestw) bestw = cw;
+	return;
+    }
+    //检查子树
+    r - = w[i];
+    if (cw + w[i] <= c)//尝试x[i] = 1
+    {
+	cw += w[i];
+	BackTrack( i + 1 ) ;
+	cw -= w[i];
+    }
+    if (cw + r > bestw) //尝试x[i] = 0
+	BackTrack( i + 1 ) ;
+    r += w[i];
+}
+
+//优化的初始函数MaxLoading
+template<class T>
+T MaxLoading(T w[], T c, int n)// 返回最优装载的重量
+{
+    Loading<T> X;
+    //初始化X
+    X.w = w;
+    X.c = c;
+    X.n = n;
+    X.bestw = 0;
+    X.cw = 0;
+    X.r=0;
+    for(int i=1; i<=n; i++) 
+    	X.r+=w[i];
+    // 计算最优装载的重量
+    X.BackTrack(1); //从第1层开始搜索
+    return X.bestw;
+}
+
+含构造最优解的核心函数BackTrack：引入数组成员x和bestx。x数组用于记录当前从根至当前节点的路径，bestx数组记录当前最优解。
+
+template<class T> 
+void Loading<T>::BackTrack(int i)//从第i 层节点搜索
+{ 
+    if (i > n) //位于叶节点 
+    {
+        if (cw > bestw) 
+        { 
+            bestw = cw; 
+	    for(j=1; j<=n; j++) 
+	        bestx[j]=x[j];
+	} 
+     	return; 
+    } 
+    r - = w[i]; //检查子树 
+    if (cw + w[i] <= c) //尝试x[i] = 1 
+    {
+	x[i] = 0;
+        cw += w[i]; 
+        BackTrack( i + 1 ) ; 
+        cw -= w[i];
+    } 
+    if (cw + r > bestw) //尝试x[i] = 0
+    { 
+	x[i] = 0;
+        BackTrack( i + 1 ) ; 
+    }
+    r += w[i]; 
+}
+
+
+迭代回溯：因为数组x 中记录可在树中移动的所有路径，故可以消除大小为n的递归栈空间。
+
+template<class T>
+T MaxLoading(T w[], T c, int n, int bestx[])// 返回最佳装载及其值
+{ 
+    // 初始化根节点
+    int i = 1; // 当前节点的层次
+    // x[1:i-1] 是到达当前节点的路径
+    int *x = new int [n+1];
+    T bestw = 0, // 迄今最优装载的重量
+       cw = 0, // 当前装载的重量
+       r = 0; // 剩余货箱重量的和
+    for (int j = 1; j <= n; j++) 
+        r += w[j];
+    // 在树中搜索
+    while (true) // 尽可能下移进入左子树
+    { 
+        while (i <= n && cw + w[i] <= c) 
+        {
+	r -= w[i]; // 移向左孩子
+	cw += w[i]; 
+	x[i] = 1; 
+	i + + ;
+        }
+        if (i > n) // 到达叶子
+        {
+	for (int j = 1; j <= n; j++) 
+	    bestx[j] = x[j];
+	bestw = cw;
+        }
+        else  //移向右孩子
+        {
+	r -= w[i]; 
+	x[i] = 0; 
+	i++; 
+        }
+        // 必要时返回
+        while (cw + r <= bestw) 
+        {
+	i-- ; //本子树没有更好的叶子，返回
+	while (i > 0 && !x[i]) 
+	{
+	    //从右孩子返回
+	    r += w[i]; 
+	    i - - ;
+	}
+	if (i == 0)
+	{
+	    delete [] x; 
+	    return bestw;
+	}
+	//进入右子树
+	x[i] = 0; 
+	cw-= w[i]; 
+	i + + ;
+        }
+    }
+}
+

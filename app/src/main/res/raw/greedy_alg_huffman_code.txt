@@ -1,0 +1,75 @@
+﻿哈夫曼编码( Huffman Codes，P109 )：广泛用于数据文件(如传真、图像)的无损压缩，压缩率常在20%~90%之间。
+
+文件编码问题描述： 给定一个文件，该文件长度为 100,000 个字符，其中包含a, b, c, d, e和f 六种字符，各字符出现频率如下表，试对该文件进行编码存储。
+
+a 45
+b 13
+c 12
+d 16
+e 9
+f 5
+
+变长编码的贪心策略2：频率越高，使用越少编码位。
+
+前缀码 (Prefix Codes)的概念： 对每个字符规定一个0,1串作为其代码，并要求任一字符的代码都不是其它字符代码的前缀。这种编码称为前缀码。 前缀码的性质使译码方法非常简单，例如：001011101，根据上述编码可直接译出：aabe。
+
+前缀码的平均码长
+令C表示待编码的字符集，字符c的频率为f(c)，T为C的一种前
+缀码方案的二叉树表示。 每个叶子节点对应一个字符。字符c在树T
+中的深度记为：dT(c)。实际上dT(c)就是字符c的前缀码长。编码方案
+T的平均码长定义如下：
+ 最优前缀码：使得所有字符编码的平均码长最小。
+B(T) f (c)d (c) T
+C c 
+
+此时T为C的最优前缀码方案的满二叉树表示，T恰有|C|个叶子
+节点和|C|-1个内部节点(根据满二叉树的性质)。
+
+template<class T> class Huffman
+{ 
+    friend BinaryTree<int> HuffmanTree(T [], int); 
+public: 
+    operator T( ) const { return weight;} 
+public: 
+    BinaryTree<int> tree; 
+    T weight; 
+};
+Huffman编码的算法实现
+template <class T> BinaryTree<int> HuffmanTree(T a[], int n) 
+{ 
+    //根据权重数组a[1->n] 构造Huffman树 
+    //创建一个单节点树的数组 
+    Huffman<T> *w = new Huffman<T> [n+1]; 
+    BinaryTree<int> z, zero; 
+    for (int i = 1; i <= n; i++) 
+    { 
+        z.MakeTree(i, zero, zero); 
+        w[i].weight = a[i]; 
+        w[i].tree = z; 
+    } 
+
+    //把数组变成一个最小堆 
+    MinHeap< Huffman <T> > H(1); 
+    H.Initialize(w,n,n);
+
+    //将堆中的树不断合并
+    Huffman<T> x, y;
+    for (int i = 1; i < n; i++)
+    {
+        H.DeleteMin(x);
+        H.DeleteMin(y);
+        z.MakeTree(0, x.tree, y.tree);
+        x.weight += y.weight; 
+        x.tree = z;
+        H.Insert(x);
+    }
+    H.DeleteMin(x); //得到Huffman树
+    H.Deactivate();
+    delete [] w;
+    return x.tree;
+}
+
+算法的复杂度为：O(nlogn)
+
+
+

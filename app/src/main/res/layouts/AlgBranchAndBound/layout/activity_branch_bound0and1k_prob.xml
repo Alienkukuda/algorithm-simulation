@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.example.demo.view.BottomScrollView
+        android:id="@+id/main_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGreen"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="840dp"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lv_code_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:choiceMode="singleChoice"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_item_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_item_sum"
+                    android:textColor="@color/colorBlack" />
+
+                <EditText
+                    android:id="@+id/et_input"
+                    android:layout_width="100px"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:ems="10"
+                    android:maxLength="2"
+                    android:layout_marginLeft="30px" />
+
+                <TextView
+                    android:id="@+id/tv_item_sum_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(1-4)"
+                    android:layout_marginLeft="30px"
+                    android:textColor="@color/colorBlack" />
+
+                <Button
+                    android:id="@+id/bt_get_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70px"
+                    android:text="@string/bt_get_data" />
+            </LinearLayout>
+            <com.example.demo.view.TableView
+                android:id="@+id/table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="8dp"
+                app:dividerColor="#e1e1e1"
+                app:dividerWidth="1px"
+                app:headerColor="#00ffffff"
+                app:headerTextColor="#111111"
+                app:headerTextSize="10dp"
+                app:rowHeight="36dp"
+                app:textColor="#999999"
+                app:textSize="10dp"
+                app:unitColumnWidth="0dp" />
+
+            <com.example.demo.view.TableView
+                android:id="@+id/table_per"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="8dp"
+                app:dividerColor="#e1e1e1"
+                app:dividerWidth="1px"
+                app:headerColor="#00ffffff"
+                app:headerTextColor="#111111"
+                app:headerTextSize="10dp"
+                app:rowHeight="36dp"
+                app:textColor="#999999"
+                app:textSize="10dp"
+                app:unitColumnWidth="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="单位重量价值数组"
+                    android:textColor="@color/red"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <com.example.demo.view.TableView
+                android:id="@+id/table_best"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="8dp"
+                app:dividerColor="#e1e1e1"
+                app:dividerWidth="1px"
+                app:headerColor="#00ffffff"
+                app:headerTextColor="#111111"
+                app:headerTextSize="10dp"
+                app:rowHeight="36dp"
+                app:textColor="#999999"
+                app:textSize="10dp"
+                app:unitColumnWidth="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最优解"
+                    android:textColor="@color/red"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <com.example.demo.AlgBranchAndBound.customizeView.BranchAndBound0And1KProbView
+                android:id="@+id/BranchAndBound0And1KProbView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_bp_capacity"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_bp_capacity"
+                    android:textColor="@color/colorBlack" />
+
+                <EditText
+                    android:id="@+id/et_bp_capacity"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:ems="10"
+                    android:maxLength="2" />
+
+                <Button
+                    android:id="@+id/bt_start"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_start" />
+
+                <Button
+                    android:id="@+id/bt_nextstep"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_nextstep" />
+
+                <Button
+                    android:id="@+id/bt_stepover"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_steppover" />
+
+                <Button
+                    android:id="@+id/bt_stop"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_stop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/lightBlue"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_current_weight_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="当前重量："
+                            android:textColor="@color/red" />
+
+                        <TextView
+                            android:id="@+id/tv_current_weight"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_current_value_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="当前价值："
+                            android:textColor="@color/red" />
+
+                        <TextView
+                            android:id="@+id/tv_current_value"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_current_best_value_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="当前最优价值："
+                            android:textColor="@color/red" />
+
+                        <TextView
+                            android:id="@+id/tv_current_best_value"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_current_floor_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="节点所在层："
+                            android:textColor="@color/red" />
+
+                        <TextView
+                            android:id="@+id/tv_current_floor"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/lv_code_list_prod"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="singleChoice"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.example.demo.view.BottomScrollView>
+</LinearLayout>

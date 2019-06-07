@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|center_vertical"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/bt_recur_divcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_recur_divcon" />
+
+    <Button
+        android:id="@+id/bt_dynamic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_dynamic" />
+
+    <Button
+        android:id="@+id/bt_greedy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_greedy" />
+
+    <Button
+        android:id="@+id/bt_backtrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_backtrack" />
+
+    <Button
+        android:id="@+id/bt_branch_bound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_branch_bound" />
+
+    <Button
+        android:id="@+id/bt_system_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_system_help" />
+
+</LinearLayout>

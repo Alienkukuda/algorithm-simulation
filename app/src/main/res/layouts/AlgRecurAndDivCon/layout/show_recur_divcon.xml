@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="递归与分治策略演示"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/bt_tower_of_hanoi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nag_towerofhanoi" />
+
+    <Button
+        android:id="@+id/bt_bin_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nag_binsearch" />
+
+    <Button
+        android:id="@+id/bt_merge_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nag_mergesort" />
+
+    <Button
+        android:id="@+id/bt_quick_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nag_quicksort" />
+
+</LinearLayout>

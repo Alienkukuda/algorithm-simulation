@@ -1,0 +1,79 @@
+﻿ n后问题(起源于1850年高斯提出的8皇后问题)：在n×n格的棋盘上放置彼此不受攻击的n个皇后。国际象棋的规则：皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。n后问题等价于：在n×n格的棋盘上放置n个皇后，任何2个皇后不放在同一行或同一列或同一斜线上。
+
+ n后问题求解： 令：x[1:n]表示问题的解，其中x[i]表示皇后i放在第i行的第x[i]列。下面考虑约束条件： 1) 非同列约束：因两个皇后不能处在同一列，故各x[i]的值均不能相等。 2) 非同行约束：根据x[i]的定义可知各皇后肯定不同行。 3) 非斜线约束：考虑n×n网格的两个单元格(i,j)和(k,l)，若两个单元格同一斜线，则必有： (i-j)=(k-l) 或 (i+j)=(k+l)，进一步有： (i-k)=(j-l) 或 (i-k)=(l-j)， 因此： 若 |i-k|<>|j-l|，则单元格(i,j)和(k,l)肯定不在同一斜线。
+
+
+//回溯法实现-主类、约束判断和主程序：
+Class Queen  //主类
+{ 
+    friend int nQueen(int);
+private:
+    bool Place(int k); //约束函数
+    void Backtrack(int t); //核心函数
+    int n, //皇后数
+       *x; // 当前解
+    long sum; //当前已找到的可行方案
+};
+
+bool Queen::Place(int k) //约束判断
+{  
+    for(int j=1;j<k; j++) 
+        if((abs(k-j) == abs(x[j]-x[k])) || (x[j]==x[k])) 
+	    return false; 
+    return true; 
+}
+
+
+//主程序 
+int nQueen(int n)
+{ 
+    Queen Q; 
+    int *p= new int[n+1];//生成结果数组 
+    for(int i=0; i<=n; i++)  //初始化结果数组 
+	p[i]=0; 
+    Q.x=p; 
+    Q.Backtrack(1); 
+    delete [] p; 
+    return Q.sum; 
+} 
+void main()
+{ 
+    cout<<nQueen(n)<<endl; 
+}
+
+//递归回溯法实现-核心函数BackTrack：
+void Queen::Backtrack(int t)
+{ 
+    if( t>n )
+	sum++; //解方案数加1 
+    else
+    { 
+	for(int i=1; i<=n; i++)
+	{ 
+	    x[t]=i; 
+	    if(Place(t))  Backtrack(t+1); 
+	} 
+    } 
+}
+
+//迭代回溯法实现-核心函数BackTrack：
+void Queen::Backtrack(void) 
+{ 
+    x[1]=0; 
+    int k=1; 
+    while(k>0) 
+    { 
+	x[k]+=1; 
+	while((x[k]<=n) && !(Place(k))) x[k]+=1; 
+	if(x[k]<=n)
+	{ 
+	    if(k==n)  sum++;
+	    else
+	    { 
+		k++; 
+		x[k]=0; 
+	    } 
+	}
+	else   k--; //回溯 
+    } 
+}

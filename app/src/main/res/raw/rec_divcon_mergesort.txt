@@ -1,0 +1,47 @@
+﻿合并排序(Merge Sort, 又称归并排序)的分治思想： 将待排序元素分成大小大致相同个子集合，分别对2个子集合进行排序，最终将排好序的子集合合并成为所要求的排好序的集
+合并排序的递归算法复杂性分析：
+1) Merge和Copy函数的复杂性为O(n);
+2) 令整个2路合并算法的复杂性为T(n)，则有：T(n)=O(nlogn)
+注：由于排序问题的计算下界为Ω(nlogn)，故二路合并排序算法是一个渐近最优算法。
+
+//合并排序的递归算法实现(2路合并的MergeSort)：
+
+template <class Type>
+void MergeSort(Type a[], int left, int right){
+   if (left<right) {//至少有2个元素
+      int middle=(left+right)/2;  //取中点将数组分成左右两半
+      MergeSort(a, left, middle);  //对左边的排序
+      MergeSort(a, middle+1, right);  //对右边的排序
+	  int *b = new int[right-left+1];        //申请一个保存数据的空间
+      Merge(a, b, left, middle, right);  //将左右排序结果合并到数组b
+      Copy(a, b, left, 0, right-left+1);  
+	  //将排序结果b复制回数组a，从b[0]开始赋值到a[left],共赋值right-left+1个元素
+	  delete []b;
+   }
+}
+
+template <class Type>
+void Merge(Type a[], Type b[], int left, int middle, int right){
+    int i=0, left1=middle+1;
+    while(left<=middle || left1<=right){
+         if(left==middle+1) { 
+			 Copy(b,a,i,left1,right-left1+1); break; //从a数组元素left1开始赋值
+		 }
+         if(left1==right+1) { 
+			 Copy(b,a,i,left,middle-left+1); break; //从a数组元素left开始赋值
+		 }
+         if(a[left]>a[left1]){
+            b[i]=a[left1]; left1++; i++;
+         }else{
+            b[i]=a[left]; left++; i++;
+         }
+    }
+}
+
+template <class Type>
+//将src赋值到dest(从srcLeft到srcRight)，共size个元素
+void Copy(Type dest[], Type src[], int destLeft, int srcLeft, int size){
+	for(int i=srcLeft; i<srcLeft+size; i++){
+		dest[destLeft++]=src[i];
+	}
+}
